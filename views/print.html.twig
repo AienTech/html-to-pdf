@@ -1,0 +1,118 @@
+<html>
+
+<head>
+    <link href="https://cdn.rawgit.com/rastikerdar/sahel-font/v1.0.0-alpha21/dist/font-face.css" rel="stylesheet" type="text/css"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 1cm;
+            font-family: 'Sahel';
+        }
+
+        @page {
+            size: 7in 9.25in;
+            margin: 27mm 16mm 27mm 16mm;
+        }
+
+        h1 {
+            page-break-before: always;
+
+            text-align: center;
+
+            font-size: 24px !important;
+        }
+
+        h2 {
+            font-size: 20px !important;
+        }
+
+        h3 {
+            font-size: 18px !important;
+        }
+
+        h4 {
+            font-size: 16px !important;
+        }
+
+        p,
+        td,
+        tr,
+        strong,
+        b,
+        i,
+        li {
+            font-size: 11px !important;
+            word-wrap: break-word;
+            word-break: normal;
+        }
+
+        pre,
+        code {
+            font-family: 'Inconsolata', monospace;
+            font-size: 8px !important;
+            max-width: 95%;
+        }
+
+        pre {
+            margin: .5cm;
+            background-color: #eee;
+            border: 1px solid #d0d0d0;
+        }
+
+        code {
+            padding: .25cm;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 95%;
+            table-layout: fixed;
+        }
+
+        table caption {
+            font-size: 1.5em;
+            margin: .5em 0 .75em;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+        }
+
+        img {
+            max-width: 90%;
+            height: auto !important;
+        }
+
+        h1:first {
+            page-break-after: avoid;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="firstpage">
+        سلام
+    </div>
+    <div>
+        {{ content }}
+    </div>
+</body>
+
+</html>

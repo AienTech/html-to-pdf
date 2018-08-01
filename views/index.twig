@@ -1,0 +1,38 @@
+{% extends 'layout.twig' %} 
+
+{% block body %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h1>خوش آمدید</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+          <label for="htmlInput">محتوای HTML:</label>
+          <textarea class="form-control" dir="ltr" id="htmlInput" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary">ارسال</button>
+    </div>
+  </div>
+
+  <script>
+    var btn = $(".btn");
+
+    btn.click(function(e) {
+      var htmlText = $("textarea#htmlInput").val();
+      
+      $.ajax('/convert', {
+        async: true,
+        data: {"html": htmlText.toString(), "title": "آیین سعیدی"},
+        dataType: "json",
+        method: "post",
+        timeout: 60,
+        success: function(data, status, xhr) {
+          console.log(data, status);
+        }
+      })
+    });
+  </script>
+{% endblock %}
