@@ -10,12 +10,12 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'پرینتر' });
 });
 
-router.post('/convert', function (req, res, next) {
+router.post('/convert', function (req, response, next) {
   var options = {
     format: "A4",
     "header": {
       "height": "35mm",
-      "contents": '<div style="text-align: center;border-bottom: 1px solid #eee;">' + req.body.title + '</div>'
+      "contents": '<table class="header-table" style="text-align:center;"><tr><td>' + req.body.author + '</td><td style="font-weight: bold;">' + req.body.title + '</td></tr></table>'
     },
     "footer": {
       "height": "28mm",
@@ -28,24 +28,25 @@ router.post('/convert', function (req, res, next) {
   };
 
   var html = req.body.html;
-  var filename = new Date() + '.html';
+  var filename = req.body.title;
+  var detail = null;
 
-  Twig.renderFile(__dirname + '/../views/print.html.twig', { content: html }, (err, result) => {
-    fs.writeFileSync(filename, result, function (err) {
+  Twig.renderFile(__dirname + '/../views/print.html.twig', { content: html, title: filename, author: req.body.author, detail: detail }, (err, result) => {
+    fs.writeFileSync(filename + '.html', result, function (err) {
       if (err) return console.log(err);
     })
   
-    var file = fs.readFileSync('./' + filename, 'utf8');
+    var file = fs.readFileSync('./' + filename + '.html', 'utf8');
   
     pdf.create(file, options).toFile('./' + filename + '.pdf', function (err, res) {
       if (err) return console.log(err);
   
-      console.log(res);
-  
-      fs.unlink(filename, function (err) {
+      fs.unlink(filename + '.html', function (err) {
         if (err) return console.log(err);
   
         console.log(filename + " removed")
+
+        response.status(200).json({status: 'ok', filename: res.filename})
       })
     })
   });

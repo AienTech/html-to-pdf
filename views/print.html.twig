@@ -14,12 +14,46 @@
 
         body {
             padding: 1cm;
-            font-family: 'Sahel';
+            font-family: "Sahel";
         }
 
         @page {
             size: 7in 9.25in;
             margin: 27mm 16mm 27mm 16mm;
+        }
+
+        a {
+            page-break-inside: avoid;
+        }
+
+        blockquote {
+            page-break-inside: avoid;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            page-break-after: avoid;
+            page-break-inside: avoid;
+        }
+
+        img {
+            page-break-inside: avoid;
+            page-break-after: avoid;
+        }
+
+        table,
+        pre {
+            page-break-inside: avoid;
+        }
+
+        ul,
+        ol,
+        dl {
+            page-break-before: avoid;
         }
 
         h1 {
@@ -42,6 +76,36 @@
             font-size: 16px !important;
         }
 
+        a:link,
+        a:visited,
+        a {
+            background: transparent;
+            color: #520;
+            font-weight: bold;
+            text-decoration: underline;
+            text-align: left;
+        }
+
+        a {
+            page-break-inside: avoid;
+        }
+
+        a[href^="http"]:after {
+            content: " < " attr(href) "> ";
+        }
+
+        $a:after>img {
+            content: "";
+        }
+
+        article a[href^="#"]:after {
+            content: "";
+        }
+
+        a:not(:local-link):after {
+            content: " < " attr(href) "> ";
+        }
+
         p,
         td,
         tr,
@@ -56,19 +120,19 @@
 
         pre,
         code {
-            font-family: 'Inconsolata', monospace;
+            font-family: "Inconsolata", monospace;
             font-size: 8px !important;
             max-width: 95%;
         }
 
         pre {
-            margin: .5cm;
+            margin: 0.5cm;
             background-color: #eee;
             border: 1px solid #d0d0d0;
         }
 
         code {
-            padding: .25cm;
+            padding: 0.25cm;
         }
 
         a {
@@ -76,21 +140,28 @@
             color: black;
         }
 
-        table {
+        table.header-table {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        table:not(.header-table) {
             border: 1px solid #ccc;
             border-collapse: collapse;
             margin: 0;
             padding: 0;
-            width: 95%;
+            width: auto;
             table-layout: fixed;
         }
 
-        table caption {
+        table:not(.header-table) caption {
             font-size: 1.5em;
-            margin: .5em 0 .75em;
+            margin: 0.5em 0 0.75em;
         }
 
-        table tr {
+        table:not(.header-table) tr {
             background-color: #f8f8f8;
             border: 1px solid #ddd;
         }
@@ -103,12 +174,26 @@
         h1:first {
             page-break-after: avoid;
         }
+
+        .firstpage {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .firstpage h1 {
+            page-break-before: avoid;
+        }
     </style>
 </head>
 
 <body>
     <div class="firstpage">
-        سلام
+        <h1>{{ title }}</h1>
+        <br/>
+        <h3>نوشته شده توسط {{ author }}</h3>
+        {% if detail != null %}
+            {{ detail }}
+        {% endif %}
     </div>
     <div>
         {{ content }}
