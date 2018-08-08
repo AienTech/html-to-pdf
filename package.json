@@ -7,6 +7,7 @@
     "dev": "DEBUG=html-to-pdf:* nodemon ./bin/www"
   },
   "dependencies": {
+    "aws-sdk": "^2.286.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",

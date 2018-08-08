@@ -3,6 +3,11 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <h1>خوش آمدید</h1>
   </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <p>این برنامه، خیلی ساده ورودی‌های اچ‌تی‌ام‌ال رو به پی‌دی‌اف تبدیل میکنه. کافیه که شما بدنه‌ی فایل اچ‌تی‌ام‌ال رو بهش بدید، عنوان متن رو وارد کنید و نام خودتون یا نویسنده رو هم بنویسید، در نهایت خروجی کتابی از متنتون رو دریافت کنید.</p>
+    <p>ضمنا شما میتونید از سرویس ای‌پی‌آی هم برای ساخت کتاب استفاده کنید. فقط کافیه یک شی JSON رو با درج <code>title</code> یا عنوان کتابتون، <code>detail</code> برای توضیحات کتاب، <code>author</code> برای نام نویسنده و <code>html</code> بامحتوای اچ‌تی‌ام‌ال به آدرس <code>POST https://html-to-pdf.saidi27.com/convert</code> ارسال و پس از اتمام کار آدرس دانلود فایل رو دریافت کنید.</p>
+  </div>
 </div>
 
 <div class="row">
@@ -19,26 +24,39 @@
       <label for="htmlInput">محتوای HTML:</label>
       <textarea class="form-control" dir="ltr" id="htmlInput" rows="3"></textarea>
     </div>
-    <button class="btn btn-primary">ارسال</button>
+    <button id="btnSend" class="btn btn-primary">ارسال</button>
+    <button id="btnDownload" class="btn btn-default" disabled="true">دانلود فایل</button>
   </div>
 </div>
 
 <script>
-  var btn = $(".btn");
+  var btnSend = $("#btnSend");
 
-  btn.click(function (e) {
+  btnSend.click(function (e) {
     var htmlText = $("textarea#htmlInput").val();
     var htmlAuthor = $("input#htmlAuthor").val();
     var htmlTitle = $("input#htmlTitle").val();
+    var btnDownload = $('#btnDownload');
+
+    btnSend.prop('disabled', true);
+    btnDownload.prop('disabled', true);
 
     $.ajax('/convert', {
       async: true,
       data: { "html": htmlText.toString(), "title": htmlTitle.toString(), "author": htmlAuthor.toString() },
       dataType: "json",
       method: "post",
-      timeout: 60,
       success: function (data, status, xhr) {
-        console.log(data, status);
+        btnDownload.click(function(e) {
+          window.open(data.data, '_blank');
+        });
+        btnDownload.prop('disabled', false);
+      },
+      error: function(xhr, status, err) {
+        $('#status').text(JSON.stringify(err));
+      },
+      complete: function() {
+        btnSend.prop('disabled', false);
       }
     })
   });
