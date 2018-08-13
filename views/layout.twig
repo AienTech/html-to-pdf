@@ -1,23 +1,123 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
-    <link rel='stylesheet' href='https://www.saidi27.com/static/style-light.css' />
-    <link rel="stylesheet" href="public/stylesheets/style.css"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link href="https://cdn.rawgit.com/rastikerdar/shabnam-font/v4.0.0/dist/font-face.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <style>
-      * {
-        font-family: 'Shabnam', sans-serif;
-      }
-    </style>
-  </head>
-  <body>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-33706797-9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-33706797-9');
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="title" content="اچ تی ام به پی دی اف">
+  <meta name="description" content="یه ابزار ساده برای تبدیل اچ‌تی‌ام‌ال به پی‌دی‌اف">
+  <meta name="keywords" content="ابزار اچ تی ام ال به پی دی اف کانورتور کتاب">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="language" content="Farsi">
+  <meta name="revisit-after" content="1 days">
+  <meta name="author" content="آیین سعیدی">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{{ title }}</title>
+  <link rel='stylesheet' href='https://s3-us-west-2.amazonaws.com/saidi27/saidi27-static/theme/css/argon.rtl.min.css' />
+  <link rel="stylesheet" href="stylesheets/style.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link href="https://cdn.rawgit.com/rastikerdar/shabnam-font/v4.0.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <style>
+    * {
+      font-family: 'Shabnam', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header-global">
+    <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light">
+      <div class="container">
+        <a class="navbar-brand mr-lg-5" href="../index.html">
+          <img src="https://s3-us-west-2.amazonaws.com/saidi27/saidi27-static/logo.svg">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar_global">
+          <div class="navbar-collapse-header">
+            <div class="row">
+              <div class="col-6 collapse-brand">
+                <a href="/">
+                  <img src="https://s3-us-west-2.amazonaws.com/saidi27/saidi27-static/logo.svg">
+                </a>
+              </div>
+              <div class="col-6 collapse-close">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global"
+                  aria-expanded="false" aria-label="Toggle navigation">
+                  <span></span>
+                  <span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+            <li class="nav-item dropdown">
+              <a class="nav-link" data-toggle="dropdown" role="button">
+                <i class="ni ni-ui-04 d-lg-none"></i>
+                <span class="nav-link-inner--text">اچ‌تی‌ام‌ال به پی‌دی‌اف</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <main>
+    {% block body %}{% endblock %}
+  </main>
+
+  <footer class="footer has-cards">
     <div class="container">
-      {% block body %}{% endblock %}
+      <div class="row row-grid align-items-center my-md">
+        <div class="col-lg-6">
+          <h3 class="text-primary font-weight-light mb-2">ممنونم از پشتیبانیتون!</h3>
+          <h4 class="mb-0 font-weight-light">میتونید تو شبکه‌های اجتماعی با من در تماس باشید.</h4>
+        </div>
+        <div class="col-lg-6 text-lg-center btn-wrapper">
+          <a target="_blank" href="https://twitter.com/aientech" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow me on Twitter">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <a target="_blank" href="https://github.com/AienTech" class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow me on Github">
+            <i class="fa fa-github"></i>
+          </a>
+        </div>
+      </div>
+      <hr>
+      <div class="row align-items-center justify-content-md-between">
+        <div class="col-md-6">
+          <div class="copyright">
+            &copy; 2018 - ۱۳۹۷
+            <a href="https://www.saidi27.com" target="_blank">S27.</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <ul class="nav nav-footer justify-content-end">
+            <li class="nav-item">
+              <a href="https://www.saidi27.com" class="nav-link" target="_blank">آیین سعیدی</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://opensource.org/licenses/MIT" class="nav-link" target="_blank">مجوز MIT</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </body>
+  </footer>
+</body>
+
 </html>

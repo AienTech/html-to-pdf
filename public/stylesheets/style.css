@@ -4,5 +4,6 @@ textarea {
 }
 
 body, label, form-group {
+  direction: rtl;
   font-family: 'Shabnam', sans-serif !important;
 }

@@ -1,0 +1,180 @@
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  direction: rtl;
+  font-family: "Sahel";
+  margin: 0;
+  padding: 0;
+  padding: 1cm;
+  text-align: right;
+}
+
+@page {
+  margin: 27mm 16mm;
+  size: 7in 9.25in;
+}
+
+pre,
+code {
+  direction: ltr;
+  text-align: left;
+}
+
+a,
+blockquote {
+  page-break-inside: avoid;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  page-break-after: avoid;
+  page-break-inside: avoid;
+}
+
+img {
+  page-break-after: avoid;
+  page-break-inside: avoid;
+}
+
+table,
+pre {
+  page-break-inside: avoid;
+}
+
+ul,
+ol,
+dl {
+  page-break-before: avoid;
+}
+
+h1 {
+  font-size: 24px !important;
+  page-break-before: always;
+  text-align: center;
+}
+
+h2 {
+  font-size: 20px !important;
+}
+
+h3 {
+  font-size: 18px !important;
+}
+
+h4 {
+  font-size: 16px !important;
+}
+
+a {
+  background: transparent;
+  color: #000;
+  font-weight: 700;
+  page-break-inside: avoid;
+  text-align: left;
+  text-decoration: underline;
+}
+
+a:link,
+a:visited {
+  background: transparent;
+  color: #000;
+  direction: rtl;
+  text-align: right;
+  text-decoration: none;
+}
+
+a[href^="http"]:after,
+a:not(:local-link):after {
+  content: " <" attr(href) "> ";
+}
+
+a:after > img,
+article a[href^="#"]:after {
+  content: "";
+}
+
+p,
+td,
+tr,
+strong,
+b,
+i,
+li {
+  font-size: 11px !important;
+  word-break: normal;
+  word-wrap: break-word;
+}
+
+pre,
+code {
+  font-family: "Inconsolata", monospace;
+  font-size: 8px !important;
+  max-width: 95%;
+}
+
+pre {
+  background-color: #eee;
+  border: 1px solid #d0d0d0;
+  margin: 0.5cm;
+}
+
+code {
+  padding: 0.25cm;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+table.header-table {
+  border-bottom: 1px solid #eee;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+table:not(.header-table) {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  table-layout: fixed;
+  width: auto;
+}
+
+table:not(.header-table) caption {
+  font-size: 1.5em;
+  margin: 0.5em 0 0.75em;
+}
+
+table:not(.header-table) tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+}
+
+img {
+  height: auto !important;
+  max-width: 100%;
+}
+
+h1:first {
+  page-break-after: avoid;
+}
+
+.firstpage,
+.firstpage * {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+.firstpage h1 {
+  page-break-before: avoid;
+}

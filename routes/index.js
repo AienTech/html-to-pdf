@@ -13,11 +13,17 @@ router.get('/', function (req, res, next) {
 
 router.post('/convert', async function (req, response, next) {
   try {
+    var html = req.body.html;
+    var author = req.body.author;
+    var filename = req.body.title;
+    var detail = req.body.detail || null;
+    var theme = req.body.theme || "default";
+
     var options = {
       format: "A4",
       "header": {
         "height": "35mm",
-        "contents": '<table class="header-table" style="text-align:center;"><tr><td>' + req.body.author + '</td><td style="font-weight: bold;">' + req.body.title + '</td></tr></table>'
+        "contents": '<table class="header-table" style="text-align:center;"><tr><td>' + author + '</td><td style="font-weight: bold;">' + filename + '</td></tr></table>'
       },
       "footer": {
         "height": "28mm",
@@ -28,23 +34,22 @@ router.post('/convert', async function (req, response, next) {
         }
       },
     };
-  
-    var html = req.body.html;
-    var filename = req.body.title;
-    var detail = null;
 
     var htmlFilename = path.join(__dirname, '../public/downloads/' + filename + '.html');
     var pdfFilename = path.join(__dirname, '../public/downloads/' + filename + '.pdf');
+    var themeFilename = path.join(__dirname, '../public/stylesheets/prints/theme-' + theme + '.css');
+
+    var themeCss = fs.readFileSync(themeFilename, 'utf8');
   
-    await Twig.renderFile(__dirname + '/../views/print.html.twig', { content: html, title: filename, author: req.body.author, detail: detail }, (err, result) => {
+    await Twig.renderFile(__dirname + '/../views/print.html.twig', { content: html, title: filename, author: author, detail: detail, theme: themeCss }, (err, result) => {
       fs.writeFileSync(htmlFilename, result, function (err) {
         if (err) return console.log(err);
       });
     
-      var file = fs.readFileSync(htmlFilename, 'utf8');
+      var tempHtmlFile = fs.readFileSync(htmlFilename, 'utf8');
     
-      pdf.create(file, options).toFile(pdfFilename, function (err, res) {
-        if (err) return console.log(err);
+      pdf.create(tempHtmlFile, options).toFile(pdfFilename, function (err, res) {
+        if (err) return response.status(500).json({status: 'error', error: err.message});
   
         fs.unlink(htmlFilename, function (err) {
           if (err) return response.status(500).json({status: 'error', error: err.message});
@@ -55,14 +60,21 @@ router.post('/convert', async function (req, response, next) {
           var pdfFile = fs.readFileSync(pdfFilename);
           var base64data = new Buffer(pdfFile, 'binary');
 
-          params = {Bucket: "s27.html-to-pdf", Key: filename + ".pdf", Body: base64data, ACL: 'public-read'};
+          params = {
+            Bucket: "s27.html-to-pdf", 
+            Key: filename + ".pdf", 
+            Body: base64data, 
+            ACL: 'public-read'
+          };
 
           s3.putObject(params, function (err) {
             if (err) {
-              console.log(err)
               response.status(500).send(err);
             } else {
-              response.status(200).json({status: "ok", data: "https://s3.eu-central-1.amazonaws.com/s27.html-to-pdf/" + params.Key});
+              fs.unlink(pdfFilename, function(err) {
+                console.log(err);
+              });
+              response.status(200).json({status: "ok", data: "https://s3.eu-central-1.amazonaws.com/" + params.Bucket + "/" + params.Key});
             }
           });
         });
