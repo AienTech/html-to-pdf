@@ -6,9 +6,12 @@ var Twig = require('twig');
 var path = require('path');
 var AWS = require('aws-sdk');
 
-/* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'پرینتر' });
+});
+
+router.get('/how-make-a-css-print-ready-stylesheet', function (req, res, next) {
+  res.render('how-to-print-css', { title: "چطور css رو برای پرینت آماده کنیم" })
 });
 
 router.post('/convert', async function (req, response, next) {
@@ -18,6 +21,7 @@ router.post('/convert', async function (req, response, next) {
     var filename = req.body.title;
     var detail = req.body.detail || null;
     var theme = req.body.theme || "default";
+    var css = req.body.theme || "default";
 
     var options = {
       format: "A4",
@@ -42,6 +46,8 @@ router.post('/convert', async function (req, response, next) {
     var themeCss = fs.readFileSync(themeFilename, 'utf8');
   
     await Twig.renderFile(__dirname + '/../views/print.html.twig', { content: html, title: filename, author: author, detail: detail, theme: themeCss }, (err, result) => {
+      if (err) return response.status(500).json({status: 'error', error: err.message});
+
       fs.writeFileSync(htmlFilename, result, function (err) {
         if (err) return console.log(err);
       });

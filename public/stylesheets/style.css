@@ -7,3 +7,9 @@ body, label, form-group {
   direction: rtl;
   font-family: 'Shabnam', sans-serif !important;
 }
+
+pre {
+  background-color: #f4f5f7;
+  padding: 1em;
+  border: 1px solid #e0e0e0;
+}
