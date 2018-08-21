@@ -11,7 +11,8 @@ POST https://html-to-pdf.saidi27.com/convert
     title: "Your book title",
     detail: "some info about your book",
     author: "your name",
-    theme: "your theme filename (public/stylesheets/prints/theme-[theme_name].css)"
+    theme: "your theme filename (public/stylesheets/prints/theme-[theme_name].css)",
+    html: "your html content"
 }
 ```
 
