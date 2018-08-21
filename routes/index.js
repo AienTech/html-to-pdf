@@ -21,7 +21,6 @@ router.post('/convert', async function (req, response, next) {
     var filename = req.body.title;
     var detail = req.body.detail || null;
     var theme = req.body.theme || "default";
-    var css = req.body.theme || "default";
 
     var options = {
       format: "A4",
