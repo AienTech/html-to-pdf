@@ -6,6 +6,8 @@ var Twig    = require("twig");
 var path    = require("path");
 var AWS     = require("aws-sdk");
 
+const {check, validationResult} = require("express-validator/check");
+
 // Defalt index page
 router.get("/", function (req, res, next) {
 	res.render("index", {title: "پرینتر"});
@@ -17,7 +19,25 @@ router.get("/how-make-a-css-print-ready-stylesheet", function (req, res, next) {
 });
 
 // The convert api
-router.post("/convert", async function (req, response, next) {
+router.post("/convert", [
+	check("html")
+		.not()
+		.isEmpty()
+		.isString(),
+	check("author")
+		.not()
+		.isEmpty()
+		.isString(),
+	check("title")
+		.not()
+		.isEmpty()
+		.isString(),
+], async function (req, res, next) {
+	
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).json({status: "error", errors: errors.array()});
+	}
 	
 	// Request variables
 	var html     = req.body.html;
@@ -44,10 +64,10 @@ router.post("/convert", async function (req, response, next) {
 	};
 	
 	// Path to save a temporary rendered file
-	var htmlFilename  = path.join(__dirname, "../public/downloads/" + filename + ".html");
+	var htmlFilename = path.join(__dirname, "../public/downloads/" + filename + ".html");
 	
 	// Path to save the pdf document from generated html file
-	var pdfFilename   = path.join(__dirname, "../public/downloads/" + filename + ".pdf");
+	var pdfFilename = path.join(__dirname, "../public/downloads/" + filename + ".pdf");
 	
 	// Path to the theme stylesheet
 	var themeFilename = path.join(__dirname, "../public/stylesheets/prints/theme-" + theme + ".css");
@@ -56,13 +76,13 @@ router.post("/convert", async function (req, response, next) {
 	var themeCss = fs.readFileSync(themeFilename, "utf8");
 	
 	// Render function
-	await Twig.renderFile(__dirname + "/../views/print.html.twig", {content: html, title: filename, author: author, detail: detail, theme: themeCss}, (err, result) => {
-		if (err) return response.status(500).json({status: "error", error: err.message});
+	await Twig.renderFile(__dirname + "/../views/print.html.twig", {content: html, title: filename, author: author, detail: detail, theme: themeCss}, (err, twigResult) => {
+		if (err) return res.status(500).json({status: "error", error: err.message});
 		
 		/**
 		 * First, we'll create an HTML file from the rendered twig template.
 		 */
-		fs.writeFileSync(htmlFilename, result, function (err) {
+		fs.writeFileSync(htmlFilename, twigResult, function (err) {
 			if (err) return console.log(err);
 		});
 		
@@ -73,12 +93,12 @@ router.post("/convert", async function (req, response, next) {
 		var tempHtmlFile = fs.readFileSync(htmlFilename, "utf8");
 		
 		// Create a PDF from the HTML
-		pdf.create(tempHtmlFile, options).toFile(pdfFilename, function (err, res) {
-			if (err) return response.status(500).json({status: "error", error: err.message});
+		pdf.create(tempHtmlFile, options).toFile(pdfFilename, function (err, renderedPdf) {
+			if (err) return res.status(500).json({status: "error", error: err.message});
 			
 			// Remove the HTML file
 			fs.unlink(htmlFilename, function (err) {
-				if (err) return response.status(500).json({status: "error", error: err.message});
+				if (err) return res.status(500).json({status: "error", error: err.message});
 				
 				// AWS Default settings
 				AWS.config.update({accessKeyId: process.env.AWS_AKID, secretAccessKey: process.env.AWS_SAK});
@@ -111,7 +131,7 @@ router.post("/convert", async function (req, response, next) {
 				// Upload function
 				s3.putObject(params, function (err) {
 					if (err) {
-						response.status(500).send(err);
+						res.status(500).send(err);
 					}
 					else {
 						
@@ -121,7 +141,7 @@ router.post("/convert", async function (req, response, next) {
 						});
 						
 						// Return the result
-						response.status(200).json({status: "ok", data: "https://s3.eu-central-1.amazonaws.com/" + params.Bucket + "/" + params.Key});
+						res.status(200).json({status: "ok", data: "https://s3.eu-central-1.amazonaws.com/" + params.Bucket + "/" + params.Key});
 					}
 				});
 			});
