@@ -10,7 +10,7 @@ var cors    = require("cors");
 const {check, validationResult} = require("express-validator/check");
 
 var corsOptions = {
-	origin              : "https://www.saidi27.com",
+	origin              : "https://www.saidi27.com/*",
 	optionsSuccessStatus: 200,
 };
 
