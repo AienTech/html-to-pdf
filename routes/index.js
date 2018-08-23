@@ -12,6 +12,7 @@ const {check, validationResult} = require("express-validator/check");
 var corsOptions = {
 	origin              : "https://www.saidi27.com/*",
 	optionsSuccessStatus: 200,
+	preflightContinue: true
 };
 
 // Defalt index page
