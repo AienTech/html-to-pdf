@@ -12,7 +12,7 @@ const {check, validationResult} = require("express-validator/check");
 var corsOptions = {
 	origin              : "https://www.saidi27.com",
 	optionsSuccessStatus: 200,
-	preflightContinue: true
+	preflightContinue   : true,
 };
 
 // Defalt index page
@@ -26,20 +26,27 @@ router.get("/how-make-a-css-print-ready-stylesheet", function (req, res, next) {
 });
 
 // The convert api
-router.post("/convert", cors(corsOptions), [
-	check("html")
-		.not()
-		.isEmpty()
-		.isString(),
-	check("author")
-		.not()
-		.isEmpty()
-		.isString(),
-	check("title")
-		.not()
-		.isEmpty()
-		.isString(),
-], async function (req, res, next) {
+router.post("/convert",
+	function (req, res, next) {
+		res.setHeader("Access-Control-Allow-Origin", "https://www.saidi27.com");
+		res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+		res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		next();
+	}),
+	[
+		check("html")
+			.not()
+			.isEmpty()
+			.isString(),
+		check("author")
+			.not()
+			.isEmpty()
+			.isString(),
+		check("title")
+			.not()
+			.isEmpty()
+			.isString(),
+	], async function (req, res, next) {
 	
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -154,6 +161,8 @@ router.post("/convert", cors(corsOptions), [
 			});
 		});
 	});
-});
+};
+)
+;
 
 module.exports = router;
