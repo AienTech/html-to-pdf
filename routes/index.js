@@ -51,7 +51,7 @@ router.post("/convert", [
 		format  : "A4",
 		"header": {
 			"height"  : "35mm",
-			"contents": "<table class=\"header-table\" style=\"text-align:center;\"><tr><td>" + author + "</td><td style=\"font-weight: bold;\">" + filename + "</td></tr></table>",
+			"contents": "<table class=\"header-table\" style=\"text-align:center;\"><tr><td style=\"font-weight: bold;text-align:right;\">" + filename + "</td><td style='text-align: left'>" + author + "</td></tr></table>",
 		},
 		"footer": {
 			"height"  : "28mm",
