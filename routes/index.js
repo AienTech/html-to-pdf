@@ -5,8 +5,14 @@ var fs      = require("fs");
 var Twig    = require("twig");
 var path    = require("path");
 var AWS     = require("aws-sdk");
+var cors    = require("cors");
 
 const {check, validationResult} = require("express-validator/check");
+
+var corsOptions = {
+	origin              : "https://www.saidi27.com",
+	optionsSuccessStatus: 200,
+};
 
 // Defalt index page
 router.get("/", function (req, res, next) {
@@ -19,7 +25,7 @@ router.get("/how-make-a-css-print-ready-stylesheet", function (req, res, next) {
 });
 
 // The convert api
-router.post("/convert", [
+router.post("/convert", cors(corsOptions), [
 	check("html")
 		.not()
 		.isEmpty()
