@@ -31,7 +31,7 @@ app.use(
 app.use(express.json({limit: "50mb"}));
 app.use(express.urlencoded({extended: false, limit: "50mb"}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 
 app.use(function (req, res, next) {
 	res.setHeader("Access-Control-Allow-Origin", "https://www.saidi27.com");
