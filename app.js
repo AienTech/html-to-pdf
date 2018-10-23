@@ -4,16 +4,19 @@ var path         = require("path");
 var cookieParser = require("cookie-parser");
 var logger       = require("morgan");
 var minifyHTML   = require("express-minify-html");
+var fs = require("fs");
 
 var indexRouter = require("./routes/index");
 
 var app = express();
 
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "twig");
 
-app.use(logger("dev"));
+app.use(logger("dev", {  stream: accessLogStream }));
 app.use(
 	minifyHTML({
 		override     : true,
