@@ -36,13 +36,6 @@ app.use(express.urlencoded({extended: false, limit: "50mb"}));
 app.use(cookieParser());
 app.use(express.static("public"));
 
-app.use(function (req, res, next) {
-	res.setHeader("Access-Control-Allow-Origin", "https://www.saidi27.com");
-	res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-	res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
-
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
