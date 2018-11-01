@@ -8,12 +8,6 @@ var AWS     = require("aws-sdk");
 
 const {check, validationResult} = require("express-validator/check");
 
-var corsOptions = {
-	origin              : "https://www.saidi27.com",
-	optionsSuccessStatus: 200,
-	preflightContinue   : true,
-};
-
 // Defalt index page
 router.get("/", function (req, res, next) {
 	res.render("index", {title: "پرینتر"});
