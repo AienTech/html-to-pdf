@@ -1,15 +1,17 @@
 textarea {
-  width: 100% !important;
-  height: 50vw;
+	width: 100% !important;
+	height: 50vw;
 }
 
-body, label, form-group {
-  direction: rtl;
-  font-family: 'Shabnam', sans-serif !important;
+body,
+label,
+form-group {
+	direction: rtl;
+	font-family: "Shabnam", sans-serif !important;
 }
 
 pre {
-  background-color: #f4f5f7;
-  padding: 1em;
-  border: 1px solid #e0e0e0;
+	background-color: #f4f5f7;
+	padding: 1em;
+	border: 1px solid #e0e0e0;
 }

@@ -1,0 +1,8 @@
+*.twig
+.idea/
+.gitignore
+.prettierignore
+*.min.css
+yarn.lock
+public/images
+*.log
