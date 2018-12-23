@@ -13,6 +13,12 @@ router.get("/", function(req, res, next) {
 	res.render("index", { title: "پرینتر" });
 });
 
+router.get("/convert", function(req, res, next) {
+	res.send({
+		status: "working!",
+	});
+});
+
 // A page to teach css printing
 router.get("/how-make-a-css-print-ready-stylesheet", function(req, res, next) {
 	res.render("how-to-print-css", {
